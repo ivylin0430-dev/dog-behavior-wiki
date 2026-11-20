@@ -87,3 +87,39 @@
   4. VCA 封存隔離：全 Wiki 條目零引用 `src-03-vca`，`src-03` 全面採納 PDSA 權威指引。
   5. 條目冗餘度：無同義重複條目，實體（部位）、機制（概念）、情境（迷思）三層結構分明。
 * **驗收結果**：PASS（零重試，一次性通過驗收標準）
+
+## [2026-11-20 15:50] query | 唯讀查詢檢索實測 (Read-Only Query Verification)
+* **操作類型**：知識查詢 (Query)
+* **檢索題目**：
+  1. 狗狗搖尾巴一定代表開心嗎？（命中：`wiki/entities/tail.md`, `wiki/context/myths-and-misconceptions.md`）
+  2. 狗狗打哈欠、舔嘴唇是否一定代表緊張？（命中：`wiki/entities/mouth.md`, `wiki/concepts/calming-signals.md`, `wiki/context/context-matters.md`）
+  3. 狗狗突然僵住不動代表什麼？主人如何安全回應？（命中：`wiki/entities/posture.md`, `wiki/concepts/communication-escalation.md`, `wiki/concepts/fas-spectrum.md`, `wiki/context/myths-and-misconceptions.md`）
+* **原則確認**：全程採唯讀模式檢索，Wiki 知識庫未發生任何寫入或變更。
+
+## [2026-11-20 15:51] lint | 程式結構檢驗與 LLM 語意審查 (Dual-Layer Linting)
+* **操作類型**：雙層健康檢查 (Dual-Layer Lint)
+* **Layer 1: 程式結構檢查 (`scripts/check_links.py`)**：
+  - 檢核範圍：12 篇正式 Wiki 內容頁、5 篇有效原始資料中繼檔。
+  - 檢核項目：內部鏈結有效性、索引目錄登記、孤立條目偵測、來源腳註閉合、已封存 VCA 隔離。
+  - 檢核輸出：0 斷鏈、0 孤立頁、0 未定義腳註、0 違規引用。
+  - 結果：**PASS（程式檢查合格）**
+* **Layer 2: LLM 語意審查 (Semantic Review)**：
+  - 抽查項目：
+    1. 尾巴擺動高度/僵硬度與攻擊警戒關聯（對應 `src-01` Anchor-01-D）。
+    2. 打哈欠/舔唇作為拉開距離訊號（對應 `src-02` Anchor-02-A）。
+    3. 嚴禁懲罰焦慮破壞行為（對應 `src-03` Anchor-03-C）。
+    4. 處罰低吼等同拆除警報器（對應 `src-04` Anchor-04-B）。
+    5. 定格凍結為高危險臨界點非溫馴（對應 `src-05` Anchor-05-B）。
+  - 結果：**PASS（語意審查合格，5 項核心宣稱 100% 獲原始來源真實支持，無絕對化斷言）**
+
+## [2026-11-20 15:52] loop-test | 閉環容錯與修復熔斷實測 (Fault-Injection Loop Test)
+* **操作類型**：Graph 閉環容錯機制驗證 (Fault Injection Test)
+* **說明**：本測試為**人工注入的測試錯誤**，在隔離副本 `wiki_fault_test/` 中執行，正式 Wiki 未受污染。
+* **測試流程**：
+  1. 建立測試環境：複製 `wiki/` 至 `wiki_fault_test/`。
+  2. 人工注入錯誤：在 `wiki_fault_test/entities/eyes.md` 將 `[[wiki/entities/mouth|犬隻嘴部與臉部張力]]` 改為不存在之 `[[wiki/entities/non-existent-snout|犬隻口鼻錯誤連結]]`。
+  3. 執行檢驗：`scripts/check_links.py` 成功攔截並報錯 `[FAIL] Broken internal wikilink: '[[wiki/entities/non-existent-snout...]]'`。
+  4. 執行修復 (第 1 次重試修復)：復原為正確之 `mouth.md` 鏈結。
+  5. 重新檢驗：`scripts/check_links.py` 輸出 `[PASS]`。
+  6. 清理測試環境：安全移除 `wiki_fault_test/`。
+* **驗收結果**：PASS（閉環偵錯與自動修復機制運作正常，重試 1 次即修復，未觸發 2 次熔斷）
