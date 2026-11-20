@@ -918,12 +918,12 @@
         <div style="display: flex; flex-direction: column; gap: 16px;">
           <!-- Question 1 -->
           <div class="quiz-container" id="quiz-1">
-            <div class="quiz-question">Q1. 觀察左側照片中的狗狗，在慶生拍照的情境下，牠現在的情緒最可能為何？</div>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(1, 'A')">A. 牠非常興奮開心，正滿心期待要吹蠟燭吃蛋糕！</button>
-              <button class="quiz-opt" onclick="checkQuiz(1, 'B')">B. 牠正承受輕微壓力與限制（微偏頭、嘴部緊閉微緊繃），雖在配合但主人應盡快結束擺拍。</button>
-              <button class="quiz-opt" onclick="checkQuiz(1, 'C')">C. 牠已經達到最高階憤怒，下一秒就會立刻咬人。</button>
-            </div>
+            <div class="quiz-question">Q1. 觀察左側生日照片，可以確定狗狗當下的情緒嗎？</div>
+<div class="quiz-options">
+  <button class="quiz-opt" onclick="checkQuiz(1, 'A')">A. 可以，張嘴就代表非常開心。</button>
+  <button class="quiz-opt" onclick="checkQuiz(1, 'B')">B. 不能，還需要觀察完整情境、身體姿勢及前後行為。</button>
+  <button class="quiz-opt" onclick="checkQuiz(1, 'C')">C. 可以，看到食物就代表一定興奮。</button>
+</div>
             <div class="quiz-feedback" id="feedback-1"></div>
           </div>
 
@@ -986,7 +986,7 @@
             <h4>🎓 本堂課核心精華複習</h4>
             <ul>
               <li><strong>非絕對化</strong>：沒有任何單一部位能單獨代表情緒，永遠看全身體態與脈絡。</li>
-              <li><strong>尊重耳語</strong>：在狗狗輕聲細語時後退一步，就能預防 99% 的緊張與咬傷。</li>
+              <li><strong>尊重耳語</strong>：在狗狗出現細微不適訊號時，及早停止施壓並給予空間，有助於降低緊張與衝突風險。</li>
               <li><strong>保護警報</strong>：感謝低吼，切勿懲罰警報器；異常突變先就醫排查病痛。</li>
             </ul>
           </div>
@@ -1237,11 +1237,13 @@
       if (qNum === 1) {
         if (selected === 'B') {
           feedbackEl.className = 'quiz-feedback show-correct';
-          feedbackEl.innerHTML = '<strong>✅ 答對了！非常敏銳的觀察力！</strong><br>依據 ASPCApro 與 PDSA 指引，在戴飾品且被限制坐在蛋糕前的情境下，狗狗眼神微偏、嘴巴閉緊，雖然外表平靜配合，但實際上正在承受微小壓力與社交忍受。飼主此時應盡快拍完並獎勵牠，給予自由活動的空間。';
+         feedbackEl.innerHTML = '<strong>✅ 答對了！</strong><br>單張照片無法確定狗狗當下的情緒。應觀察牠的全身姿勢、當時環境、個體差異，以及拍照前後的行為，避免只憑嘴巴或眼神做出絕對判斷。';
           event.target.classList.add('correct');
         } else {
           feedbackEl.className = 'quiz-feedback show-incorrect';
-          feedbackEl.innerHTML = '<strong>❌ 不太正確喔！</strong><br>狗狗並非在「開心期待吹蠟燭」（擬人化誤解），也不是「馬上要咬人」。牠展現的是微小的忍受與緊繃信號（微偏頭、面部肌肉微緊），請回顧 P4 與 P5 的微表情解析！';
+          
+feedbackEl.innerHTML = '<strong>❌ 再想想看！</strong><br>張嘴不一定代表開心，看到食物也不一定代表興奮。照片只記錄一個瞬間，無法直接判定狗狗的感受，因此 B 才是較合理的答案。';
+
           event.target.classList.add('incorrect');
         }
       } else if (qNum === 2) {
