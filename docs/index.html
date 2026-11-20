@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>狗狗行為解密：讀懂狗狗的肢體語言與情緒訊號</title>
+  <style>
+    :root {
+      --bg-cream: #FAF7F2;
+      --bg-card: #FFFFFF;
+      --forest-green: #244822;
+      --forest-green-light: #3D6B3A;
+      --forest-green-soft: #EBF2EA;
+      --warm-orange: #D96B43;
+      --warm-orange-light: #F4A261;
+      --warm-orange-soft: #FDF1EA;
+      --text-dark: #23272A;
+      --text-muted: #5C646A;
+      --border-color: #E2DBD0;
+      --shadow-sm: 0 2px 8px rgba(36, 72, 34, 0.06);
+      --shadow-md: 0 6px 20px rgba(36, 72, 34, 0.08);
+      --shadow-lg: 0 12px 32px rgba(36, 72, 34, 0.12);
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      font-family: var(--font-family);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Bar */
+    header.deck-header {
+      background: rgba(250, 247, 242, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--forest-green);
+      font-size: 1.05rem;
+    }
+
+    .brand svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--warm-orange);
+    }
+
+    .progress-container {
+      flex: 1;
+      max-width: 320px;
+      margin: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: #E8E2D8;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--forest-green), var(--warm-orange));
+      width: 10%;
+      transition: width 0.3s ease;
+    }
+
+    .slide-counter {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--forest-green);
+      min-width: 48px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-header {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--forest-green);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-header:hover {
+      background: var(--forest-green-soft);
+      border-color: var(--forest-green-light);
+    }
+
+    /* Deck Viewport */
+    main.deck-viewport {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      position: relative;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1080px;
+      min-height: 580px;
+      background: var(--bg-card);
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      padding: 40px;
+      animation: fadeIn 0.3s ease-out forwards;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Slide Header */
+    .slide-top {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      background: var(--forest-green-soft);
+      color: var(--forest-green);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .slide-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--forest-green);
+      line-height: 1.3;
+    }
+
+    .slide-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .btn-provenance {
+      background: var(--warm-orange-soft);
+      color: var(--warm-orange);
+      border: 1px solid var(--warm-orange-light);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .btn-provenance:hover {
+      background: var(--warm-orange);
+      color: #fff;
+    }
+
+    /* Slide Body Grid */
+    .slide-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .slide-body.full-width {
+      grid-template-columns: 1fr;
+    }
+
+    .slide-body.three-cols {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* Cards & Information Boxes */
+    .info-card {
+      background: var(--bg-cream);
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .info-card h4 {
+      font-size: 1.1rem;
+      color: var(--forest-green);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-card p, .info-card li {
+      font-size: 0.92rem;
+      color: var(--text-dark);
+      line-height: 1.55;
+    }
+
+    .info-card ul {
+      padding-left: 18px;
+      margin-top: 6px;
+    }
+
+    .info-card.alert-orange {
+      background: var(--warm-orange-soft);
+      border-color: var(--warm-orange-light);
+    }
+
+    .info-card.alert-orange h4 {
+      color: var(--warm-orange);
+    }
+
+    .info-card.alert-green {
+      background: var(--forest-green-soft);
+      border-color: var(--forest-green-light);
+    }
+
+    /* Image Containers */
+    .media-box {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      background: #EFEBE4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-height: 380px;
+    }
+
+    .media-box img {
+      width: 100%;
+      height: 100%;
+      max-height: 380px;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .media-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(35, 39, 42, 0.75);
+      backdrop-filter: blur(4px);
+      color: #FFFFFF;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      text-align: center;
+    }
+
+    /* Diagram & Visual SVG Boxes */
+    .diagram-box {
+      background: var(--bg-cream);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .diagram-box svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Interactive Quiz Container */
+    .quiz-container {
+      background: var(--bg-cream);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid var(--border-color);
+    }
+
+    .quiz-question {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--forest-green);
+      margin-bottom: 16px;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-opt {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .quiz-opt:hover {
+      border-color: var(--forest-green-light);
+      background: var(--forest-green-soft);
+    }
+
+    .quiz-opt.correct {
+      background: #E8F5E9;
+      border-color: #2E7D32;
+      color: #1B5E20;
+      font-weight: 600;
+    }
+
+    .quiz-opt.incorrect {
+      background: #FFEBEE;
+      border-color: #D32F2F;
+      color: #B71C1C;
+    }
+
+    .quiz-feedback {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .quiz-feedback.show-correct {
+      display: block;
+      background: #E8F5E9;
+      border: 1px solid #81C784;
+      color: #1B5E20;
+    }
+
+    .quiz-feedback.show-incorrect {
+      display: block;
+      background: #FFF3E0;
+      border: 1px solid #FFB74D;
+      color: #E65100;
+    }
+
+    /* Slide Bottom Footer Navigation */
+    footer.deck-footer {
+      background: var(--bg-cream);
+      border-top: 1px solid var(--border-color);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-btn-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-nav {
+      background: var(--forest-green);
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: var(--forest-green-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-nav:disabled {
+      background: #C4BFB6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-nav.btn-secondary {
+      background: var(--bg-card);
+      color: var(--forest-green);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-nav.btn-secondary:hover:not(:disabled) {
+      background: var(--forest-green-soft);
+    }
+
+    .keyboard-hint {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    kbd {
+      background: #EAE4DA;
+      border: 1px solid #CFC7B9;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 0.75rem;
+      font-family: inherit;
+      color: var(--text-dark);
+    }
+
+    /* Provenance Drawer / Modal */
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(3px);
+      z-index: 100;
+      display: none;
+      justify-content: flex-end;
+    }
+
+    .drawer-overlay.open {
+      display: flex;
+    }
+
+    .drawer {
+      background: var(--bg-card);
+      width: 100%;
+      max-width: 460px;
+      height: 100%;
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .drawer-header h3 {
+      color: var(--forest-green);
+      font-size: 1.25rem;
+    }
+
+    .btn-close-drawer {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .provenance-item {
+      background: var(--bg-cream);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    .provenance-item h5 {
+      color: var(--warm-orange);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .provenance-item h4 {
+      color: var(--forest-green);
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .provenance-item p {
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .provenance-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--forest-green-light);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .provenance-link:hover {
+      text-decoration: underline;
+      color: var(--warm-orange);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 860px) {
+      .slide {
+        padding: 24px;
+        min-height: auto;
+      }
+      .slide-body {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .slide-body.three-cols {
+        grid-template-columns: 1fr;
+      }
+      .progress-container {
+        display: none;
+      }
+      .keyboard-hint {
+        display: none;
+      }
+      .slide-title {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header class="deck-header">
+    <div class="brand">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      <span>狗狗行為解密</span>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="slide-counter" id="slideCounter">1 / 10</div>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-header" onclick="openProvenanceDrawer()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <span>Wiki 知識出處</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Deck Main Viewport -->
+  <main class="deck-viewport">
+
+    <!-- Slide 1: Cover & Goals -->
+    <section class="slide active" id="slide-1" data-slide="1">
+      <div class="slide-top">
+        <div>
+          <span class="slide-tag">教學導覽篇</span>
+          <h1 class="slide-title">狗狗行為解密：讀懂肢體語言與情緒訊號</h1>
+          <p class="slide-desc">給零基礎飼主與愛狗新手的非語言溝通科學手冊</p>
+        </div>
+        <button class="btn-provenance" onclick="showSlideSources(1)">出處溯源</button>
+      </div>
+      <div class="slide-body">
+        <div class="media-box">
+          <img src="assets/cover.jpg" alt="海邊全身放鬆站立的白色狐狸犬">
+          <div class="media-caption">觀察要點：開闊沙灘環境、自然直立耳位、四肢重心平均分佈</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="info-card alert-green">
+            <h4>🎯 本堂課三大核心學習目標</h4>
+            <ul>
+              <li><strong>破解 5 大日常行為迷思</strong>：破除「搖尾巴等於開心」、「打哈欠只是愛睏」等單一化解讀。</li>
+              <li><strong>拆解全身關鍵訊號</strong>：學會辨識眼睛（鯨魚眼）、耳朵、長唇、重心與被毛變化。</li>
+              <li><strong>掌握溝通升級階梯</strong>：在「輕聲耳語」階段看懂狗狗的求救，及時化解衝突並預防咬傷。</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h4>💡 科學評估黃金法則</h4>
+            <p>狗狗無法使用人類語言，其肢體語言是連續流動的情緒反映。解讀時切忌斷章取義，必須同時評估「全身姿勢、環境刺激、事件情境與個體基準線」。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2: How Dogs Communicate -->
+    <section class="slide" id="slide-2" data-slide="2">
+      <div class="slide-top">
+        <div>
+          <span class="slide-tag">核心概念篇</span>
+          <h2 class="slide-title">狗狗如何透過身體說話？</h2>
+          <p class="slide-desc">犬類社交溝通的核心動機：拉近關係 vs. 拉開距離</p>
+        </div>
+        <button class="btn-provenance" onclick="showSlideSources(2)">出處溯源</button>
+      </div>
+      <div class="slide-body">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="info-card alert-green">
+            <h4>🟢 拉近距離訊號 (Distance-Decreasing Signals)</h4>
+            <p><strong>溝通目的</strong>：「我感到很安心，歡迎你靠近或一起玩耍。」</p>
+            <ul>
+              <li><strong>邀玩鞠躬 (Play Bow)</strong>：前肢壓低貼地、臀部翹起歡快扭動。</li>
+              <li><strong>柔軟體態</strong>：身體像煮熟麵條般放鬆晃動，四肢平均承重。</li>
+              <li><strong>面部柔和</strong>：眼神呈自然杏仁眼，嘴唇平順微張呼吸。</li>
+            </ul>
+          </div>
+          <div class="info-card alert-orange">
+            <h4>🔴 拉開距離訊號 (Distance-Increasing Signals)</h4>
+            <p><strong>溝通目的</strong>：「我感到緊繃或害怕，請停止靠近並給我空間。」</p>
+            <ul>
+              <li><strong>主動抽離</strong>：偏頭移開視線、主動轉身離開、抬起前爪猶豫。</li>
+              <li><strong>微表情警戒</strong>：非進食舔唇、非睡意打哈欠、嘴巴突然緊閉。</li>
+              <li><strong>防禦威脅</strong>：身體僵直凍結、鼻紋緊縮、低吼甚至露齒。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="diagram-box">
+          <svg viewBox="0 0 340 260" width="300" height="230">
+            <rect x="20" y="20" width="300" height="100" rx="12" fill="#EBF2EA" stroke="#244822" stroke-width="2"/>
+            <text x="170" y="55" text-anchor="middle" font-size="16" font-weight="bold" fill="#244822">友善放鬆 (Relaxed)</text>
+            <text x="170" y="85" text-anchor="middle" font-size="13" fill="#5C646A">重心均勻 ｜ 眼神柔和 ｜ 臀部彈性擺動</text>
+            
+            <path d="M 170 120 L 170 145" stroke="#D96B43" stroke-width="3" stroke-dasharray="4"/>
+            <polygon points="165,145 175,145 170,155" fill="#D96B43"/>
+
+            <rect x="20" y="155" width="300" height="90" rx="12" fill="#FDF1EA" stroke="#D96B43" stroke-width="2"/>
+            <text x="170" y="190" text-anchor="middle" font-size="16" font-weight="bold" fill="#D96B43">受壓警戒 (Stress/Fear)</text>
+            <text x="170" y="220" text-anchor="middle" font-size="13" fill="#5C646A">重心轉移 ｜ 露眼白 ｜ 安定訊號 ｜ 肌肉僵硬</text>
+          </svg>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">犬隻行為光譜：任何施壓都會使指標向警戒端位移</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Tail Wagging Myths -->
+    <section class="slide" id="slide-3" data-slide="3">
+      <div class="slide-top">
+        <div>
+          <span class="slide-tag">迷思破解篇</span>
+          <h2 class="slide-title">破除迷思：搖尾巴一定代表開心嗎？</h2>
+          <p class="slide-desc">尾巴不是快樂指標，而是情緒能量與激發度（Arousal）的擴音器</p>
+        </div>
+        <button class="btn-provenance" onclick="showSlideSources(3)">出處溯源</button>
+      </div>
+      <div class="slide-body three-cols">
+        <div class="info-card alert-green">
+          <div style="font-size: 2rem; margin-bottom: 6px;">🐕</div>
+          <h4>全身鬆弛擺動 (Loose Wag)</h4>
+          <p><strong>高度與軌跡</strong>：尾巴處於脊椎水平線附近，擺動寬廣而有彈性，甚至帶動臀部腰部一同搖擺。</p>
+          <p style="margin-top: 8px; color: var(--forest-green); font-weight: 600;">情緒意涵：真正放鬆、友善親和與喜悅。</p>
+        </div>
+
+        <div class="info-card alert-orange">
+          <div style="font-size: 2rem; margin-bottom: 6px;">⚠️</div>
+          <h4>高豎垂直抖動 (High Stiff Wag)</h4>
+          <p><strong>高度與軌跡</strong>：尾巴垂直高舉，肌肉極度緊繃，僅在尾尖短促、快速或緩慢僵硬抖動。</p>
+          <p style="margin-top: 8px; color: var(--warm-orange); font-weight: 600;">情緒意涵：高度警覺、自信主導或威脅警戒！千萬不可伸手觸摸。</p>
+        </div>
+
+        <div class="info-card">
+          <div style="font-size: 2rem; margin-bottom: 6px;">🛡️</div>
+          <h4>夾尾與低垂 (Tucked / Low Tail)</h4>
+          <p><strong>高度與軌跡</strong>：尾巴緊緊向下收緊，甚至深夾於兩後腿之間貼緊腹部。</p>
+          <p style="margin-top: 8px; color: var(--text-muted); font-weight: 600;">情緒意涵：恐懼、受挫、缺乏安全感，企圖縮小體積避險。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Facial Signals: Eyes, Ears & Mouth -->
+    <section class="slide" id="slide-4" data-slide="4">
+      <div class="slide-top">
+        <div>
+          <span class="slide-tag">部位細節篇</span>
+          <h2 class="slide-title">微表情解析：眼睛、耳朵與嘴巴</h2>
+          <p class="slide-desc">臉部肌肉張力能最早透露狗狗心中的焦慮與舒適度</p>
+        </div>
+        <button class="btn-provenance" onclick="showSlideSources(4)">出處溯源</button>
+      </div>
+      <div class="slide-body">
+        <div class="media-box">
+          <img src="assets/face.jpg" alt="靠著桌子的白色狐狸犬臉部特寫">
+          <div class="media-caption">特寫觀察：雙耳自然豎立前傾、眼神柔和杏仁狀、嘴角平順放鬆</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="info-card">
+            <h4>👀 眼睛：柔和眼 vs. 鯨魚眼</h4>
+            <p><strong>鯨魚眼 (Whale Eye)</strong>：眼球轉動但頭部偏開，眼周外側露出一大片眼白鞏膜。代表狗狗正感到威脅或極度不安。</p>
+            <p style="margin-top: 4px;"><strong>散瞳 (Mydriasis)</strong>：正常光線下瞳孔漆黑放大，代表交感神經急性激發。</p>
+          </div>
+          <div class="info-card">
+            <h4>👂 耳朵：自然耳位 vs. 緊繃後縮</h4>
+            <p>向前直立代表好奇專注；向後緊貼 (Pinned Back) 且面部緊繃，常為恐懼或防禦表現（需對照該品種天然耳型）。</p>
+          </div>
+          <div class="info-card">
+            <h4>👄 嘴巴：放鬆微張 vs. 長唇緊繃</h4>
+            <p><strong>長唇 (Long Lip)</strong>：嘴角肌肉用力向後收縮拉長，面部出現鬼臉皺褶。原本喘氣的狗若<strong>突然閉上嘴巴</strong>，是高度警戒的急性警訊！</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Yawning & Calming Signals -->
+    <section class="slide" id="slide-5" data-slide="5">
+      <div class="slide-top">
+        <div>
+          <span class="slide-tag">行為機制篇</span>
+          <h2 class="slide-title">打哈欠與舔嘴唇：神奇的「安定訊號」</h2>
+          <p class="slide-desc">為什麼不睏會打哈欠？認識犬類的自我調節與和平外交語言</p>
+        </div>
+        <button class="btn-provenance" onclick="showSlideSources(5)">出處溯源</button>
+      </div>
+      <div class="slide-body">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="info-card alert-green">
+            <h4>🕊️ 什麼是「安定訊號」？</h4>
+            <p>由北歐犬類行為學界與 RSPCA 強調的核心概念：當狗狗面對環境壓力時，為了<strong>平息對方怒氣、安撫自己緊繃的神經</strong>，所釋放出的社交緩衝語言。</p>
+          </div>
+          <div class="info-card">
+            <h4>👅 舔唇 (Lip-licking) & 舔鼻</h4>
+            <p>在周圍沒有任何食物的情境下，狗狗頻繁以舌尖快速刷過鼻頭或嘴唇。這是微壓力與動機衝突的自我重設信號。</p>
+          </div>
+          <div class="info-card">
+            <h4>🥱 壓力型打哈欠 (Stress Yawning)</h4>
+            <p>並非想睡覺！當人類緊緊抱住狗狗、俯身靠近拍照或受訓被斥責時，狗狗頻繁打哈欠是在表達：「我很有壓力，請冷靜一點、給我一點空間。」</p>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="info-card alert-orange">
+            <h4>⚡ 轉移行為 (Displacement Behaviors)</h4>
+            <p>當狗狗面臨「想逃又不能逃」的心理困境時，會做出看似不合邏輯的動作，例如：<strong>突然低頭狂聞地面、瘋狂抓癢</strong>。這是在轉移焦慮能量，絕非「裝傻」或不專心！</p>
+          </div>
+          <div class="info-card">
+            <h4>🚿 全身乾燥甩毛 (Shake-Off)</h4>
+            <p>在身上完全沒水的情況下突然像洗完澡般用力甩動全身。這代表剛剛的一段緊繃互動剛結束（如被陌生人摸完），神經系統正在進行「壓力重設 (Reset)」。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Escalation Ladder -->
+    <section class="slide" id="slide-6" data-slide="6">
+      <div class="slide-top">
+        <div>
+          <span class="slide-tag">防咬核心篇</span>
+          <h2 class="slide-title">溝通訊號升高模型：從耳語到吶喊</h2>
+          <p class="slide-desc">Dogs Trust 經典溝通階梯：咬傷幾乎從不是無預警發生的！</p>
+        </div>
+        <button class="btn-provenance" onclick="showSlideSources(6)">出處溯源</button>
+      </div>
+      <div class="slide-body">
+        <div class="diagram-box" style="align-items: stretch; text-align: left; padding: 24px;">
+          <h4 style="color: var(--forest-green); margin-bottom: 12px; font-size: 1.1rem;">🪜 壓力升級的三大階段</h4>
+          <div style="border-left: 4px solid #4CAF50; padding-left: 12px; margin-bottom: 12px;">
+            <strong style="color: #2E7D32;">1. 輕聲耳語 (Whispering)</strong>
+            <p style="font-size: 0.85rem; color: #5C646A;">舔唇、打哈欠、偏頭避開眼神、抬起單爪、緩步離開</p>
+          </div>
+          <div style="border-left: 4px solid #FFA000; padding-left: 12px; margin-bottom: 12px;">
+            <strong style="color: #E65100;">2. 提高音量 (Raising Voice)</strong>
+            <p style="font-size: 0.85rem; color: #5C646A;">定格凍結 (Freezing)、死盯不眨眼、背部炸毛 (Hackles up)</p>
+          </div>
+          <div style="border-left: 4px solid #D32F2F; padding-left: 12px;">
+            <strong style="color: #C62828;">3. 劇烈吶喊 (Shouting)</strong>
+            <p style="font-size: 0.85rem; color: #5C646A;">鼻紋緊縮、低吼 (Growling)、露齒 (Snarl)、空咬 $\rightarrow$ 咬傷</p>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="info-card alert-orange">
+            <h4>🚨 重大警訊：為什麼絕對不可處罰低吼？</h4>
+            <p><strong>低吼是狗狗最後的和平警報器！</strong></p>
+            <p>如果飼主因為狗狗低吼而打罵牠，狗狗體內的恐懼並未消除，但牠學會了「發出警報會挨打」。</p>
+            <p style="margin-top: 6px; font-weight: 600; color: var(--warm-orange);">這等於拆除了火災警報器——創造出一隻下次面臨壓力時「無預警直接咬人」的危險犬隻！</p>
+          </div>
+          <div class="info-card">
+            <h4>📚 經驗跳級咬傷機制</h4>
+            <p>若狗狗每次發出「耳語」（如舔唇）都被忽視，唯有作勢咬人時人類才會後退，狗狗便會學會「跳過耳語，直接大喊防衛」。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Whole-Body & Context -->
+    <section class="slide" id="slide-7" data-slide="7">
+      <div class="slide-top">
+        <div>
+          <span class="slide-tag">綜合判讀篇</span>
+          <h2 class="slide-title">全身姿勢與情境判讀四大維度</h2>
+          <p class="slide-desc">不要只看單一部位！學會將線索放回完整情境中綜合評估</p>
+        </div>
+        <button class="btn-provenance" onclick="showSlideSources(7)">出處溯源</button>
+      </div>
+      <div class="slide-body three-cols">
+        <div class="info-card alert-green">
+          <h4>1. 全身姿勢 (Whole Body)</h4>
+          <ul>
+            <li><strong>重心前傾</strong>：自信、警戒或進攻預備。</li>
+            <li><strong>重心後壓</strong>：恐懼、逃避或防衛退縮。</li>
+            <li><strong>定格凍結 (Freezing)</strong>：AAHA 特別提醒，一動不動常被誤認為很乖，實為隨時可能反撲的臨界狀態！</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>2. 環境與誘發物 (Context)</h4>
+          <ul>
+            <li><strong>誘發物堆疊 (Trigger Stacking)</strong>：皮質醇需要數小時代謝，散步吠叫＋洗澡梳毛＋孩童尖叫，微小刺激也能突破閾值引發爆發。</li>
+            <li><strong>溫熱散熱 vs. 壓力喘氣</strong>：涼爽室內的急促喘氣是心理警訊。</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>3. 基準線與就醫 (Baseline)</h4>
+          <ul>
+            <li><strong>個體基準線</strong>：垂耳犬與立耳犬的自然耳位截然不同，需以無壓力時為對照。</li>
+            <li><strong>突變優先看獸醫</strong>：若原本溫和的狗突然易怒或抗拒觸碰，RSPCA 強調必須先排查<strong>關節或身體隱形疼痛</strong>！</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Interactive Scenario Quiz -->
+    <section class="slide" id="slide-8" data-slide="8">
+      <div class="slide-top">
+        <div>
+          <span class="slide-tag">互動測驗篇</span>
+          <h2 class="slide-title">實戰演練：狗狗情緒解碼測驗</h2>
+          <p class="slide-desc">檢測你的觀察力！點擊選項即可即時獲得專業行為學解析</p>
+        </div>
+        <button class="btn-provenance" onclick="showSlideSources(8)">出處溯源</button>
+      </div>
+      <div class="slide-body">
+        <div class="media-box">
+          <img src="assets/birthday.jpg" alt="白色狐狸犬戴生日帽坐在蛋糕前拍照">
+          <div class="media-caption">觀察細節：頭部略偏、眼神避開直視、嘴唇微閉、頭戴飾品擺拍</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Question 1 -->
+          <div class="quiz-container" id="quiz-1">
+            <div class="quiz-question">Q1. 觀察左側照片中的狗狗，在慶生拍照的情境下，牠現在的情緒最可能為何？</div>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(1, 'A')">A. 牠非常興奮開心，正滿心期待要吹蠟燭吃蛋糕！</button>
+              <button class="quiz-opt" onclick="checkQuiz(1, 'B')">B. 牠正承受輕微壓力與限制（微偏頭、嘴部緊閉微緊繃），雖在配合但主人應盡快結束擺拍。</button>
+              <button class="quiz-opt" onclick="checkQuiz(1, 'C')">C. 牠已經達到最高階憤怒，下一秒就會立刻咬人。</button>
+            </div>
+            <div class="quiz-feedback" id="feedback-1"></div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz-container" id="quiz-2">
+            <div class="quiz-question">Q2. 當你伸手想摸一隻陌生狗狗時，牠突然「全身定格僵直不動、眼睛睜大死盯」，你應該？</div>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(2, 'A')">A. 覺得牠很乖很溫馴任人摸，繼續伸手摸牠頭頂。</button>
+              <button class="quiz-opt" onclick="checkQuiz(2, 'B')">B. 立即停止觸摸，身體側轉並緩步後退，給予狗狗退避安全空間。</button>
+              <button class="quiz-opt" onclick="checkQuiz(2, 'C')">C. 大聲對牠說教，命令牠必須對人搖尾巴表示熱情。</button>
+            </div>
+            <div class="quiz-feedback" id="feedback-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: How Owners Should Safely Respond -->
+    <section class="slide" id="slide-9" data-slide="9">
+      <div class="slide-top">
+        <div>
+          <span class="slide-tag">安全守則篇</span>
+          <h2 class="slide-title">主人應如何給予狗狗安全的守護？</h2>
+          <p class="slide-desc">成為讀懂狗狗的盟友：建立信任、尊重邊界與環境管理</p>
+        </div>
+        <button class="btn-provenance" onclick="showSlideSources(9)">出處溯源</button>
+      </div>
+      <div class="slide-body three-cols">
+        <div class="info-card alert-green">
+          <div style="font-size: 1.8rem; margin-bottom: 6px;">🚪</div>
+          <h4>1. 看懂耳語，及時後退</h4>
+          <p>當看到狗狗舔唇、撇頭或打哈欠時，立刻停止前進或撫摸動作。給予狗狗「選擇權 (Choice)」，永遠不要強迫互動。</p>
+        </div>
+        <div class="info-card alert-green">
+          <div style="font-size: 1.8rem; margin-bottom: 6px;">🏰</div>
+          <h4>2. 設置專屬避風港 (Safe Space)</h4>
+          <p>在家中建立安靜、無風且不受打擾的專屬床位。全家人都須嚴格遵守「狗狗回窩就絕不打擾」的鐵律。</p>
+        </div>
+        <div class="info-card alert-orange">
+          <div style="font-size: 1.8rem; margin-bottom: 6px;">❌</div>
+          <h4>3. 嚴禁打罵壓力行為</h4>
+          <p>因分離焦慮或恐懼出現的破壞家具或排泄失常，打罵只會加劇恐慌；面對低吼絕不處罰，低吼是保護人犬安全的警報器。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: Summary & Wiki Provenance -->
+    <section class="slide" id="slide-10" data-slide="10">
+      <div class="slide-top">
+        <div>
+          <span class="slide-tag">知識溯源篇</span>
+          <h2 class="slide-title">學習總結與 Wiki 知識庫總覽</h2>
+          <p class="slide-desc">本教學簡報完全編譯自 Karpathy 架構之持久化 LLM Wiki 知識庫</p>
+        </div>
+        <button class="btn-provenance" onclick="showSlideSources(10)">出處溯源</button>
+      </div>
+      <div class="slide-body">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="info-card alert-green">
+            <h4>🎓 本堂課核心精華複習</h4>
+            <ul>
+              <li><strong>非絕對化</strong>：沒有任何單一部位能單獨代表情緒，永遠看全身體態與脈絡。</li>
+              <li><strong>尊重耳語</strong>：在狗狗輕聲細語時後退一步，就能預防 99% 的緊張與咬傷。</li>
+              <li><strong>保護警報</strong>：感謝低吼，切勿懲罰警報器；異常突變先就醫排查病痛。</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h4>🔗 知識溯源架構 (Slide ➔ Wiki ➔ Raw Sources)</h4>
+            <p>本簡報每一頁皆可在本專案的 <code>wiki/</code> 知識庫中找到詳盡論述，並可點擊追溯至五大權威文獻中繼資料。</p>
+          </div>
+        </div>
+
+        <div class="diagram-box" style="text-align: left; padding: 20px;">
+          <h4 style="color: var(--forest-green); margin-bottom: 10px;">🏛️ 五大權威科學文獻來源庫</h4>
+          <ul style="font-size: 0.85rem; line-height: 1.6; padding-left: 16px;">
+            <li><strong>src-01</strong>：ASPCApro 犬隻肢體語言專業指引</li>
+            <li><strong>src-02</strong>：英國皇家防止虐待動物協會 (RSPCA) 行為解讀</li>
+            <li><strong>src-03</strong>：英國人民病畜藥房 (PDSA) 犬隻壓力預防衛教</li>
+            <li><strong>src-04</strong>：英國信託救犬會 (Dogs Trust) 溝通升級模型</li>
+            <li><strong>src-05</strong>：美國動物醫院協會 (AAHA) 臨床行為管理指引</li>
+          </ul>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">*註：原 VCA 來源因 AI 改作條款限制，已依合規程序封存留存審計，未進入本簡報與知識庫。</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="deck-footer">
+    <div class="keyboard-hint">
+      <span>提示：可使用鍵盤方向鍵</span>
+      <kbd>←</kbd>
+      <kbd>→</kbd>
+      <span>或空白鍵翻頁</span>
+    </div>
+
+    <div class="nav-btn-group">
+      <button class="btn-nav btn-secondary" id="btnPrev" onclick="navigateSlide(-1)" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <span>上一頁</span>
+      </button>
+      <button class="btn-nav" id="btnNext" onclick="navigateSlide(1)">
+        <span>下一頁</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Provenance Drawer / Modal -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeProvenanceDrawer(event)">
+    <div class="drawer" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <h3 id="drawerTitle">Wiki 條目與來源追溯</h3>
+        <button class="btn-close-drawer" onclick="closeProvenanceDrawer()">&times;</button>
+      </div>
+      <div id="drawerContent">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Slide Data & Provenance Mapping (Slide -> Wiki -> Raw Source)
+    const provenanceData = {
+      1: {
+        title: "P1 封面與學習目標 出處追溯",
+        wiki: [
+          { name: "全犬與情境評估法則", path: "wiki/context/context-matters.md" },
+          { name: "常見犬類行為迷思與科學破解", path: "wiki/context/myths-and-misconceptions.md" }
+        ],
+        sources: [
+          { id: "src-01", org: "ASPCApro", title: "Canine Body Language: Tips & Communication Signals", url: "https://www.aspcapro.org/resource/canine-body-language-tips" },
+          { id: "src-02", org: "RSPCA (UK)", title: "Understanding Dog Behaviour", url: "https://www.rspca.org.uk/adviceandwelfare/pets/dogs/behaviour/understanding" }
+        ],
+        notes: "奠定全犬觀察之非絕對化原則，確立四大評估維度。"
+      },
+      2: {
+        title: "P2 身體溝通與動機 出處追溯",
+        wiki: [
+          { name: "犬類安定訊號與距離調節", path: "wiki/concepts/calming-signals.md" },
+          { name: "犬隻姿態與重心分佈", path: "wiki/entities/posture.md" }
+        ],
+        sources: [
+          { id: "src-01", org: "ASPCApro", title: "Canine Body Language Tips", url: "https://www.aspcapro.org/resource/canine-body-language-tips" },
+          { id: "src-02", org: "RSPCA (UK)", title: "Understanding Dog Behaviour", url: "https://www.rspca.org.uk/adviceandwelfare/pets/dogs/behaviour/understanding" }
+        ],
+        notes: "解構拉開距離訊號 (Distance-Increasing) 與邀玩鞠躬 (Play Bow)。"
+      },
+      3: {
+        title: "P3 搖尾巴迷思 出處追溯",
+        wiki: [
+          { name: "犬隻尾巴語言與擺動解碼", path: "wiki/entities/tail.md" },
+          { name: "常見犬類行為迷思：搖尾巴等於開心？", path: "wiki/context/myths-and-misconceptions.md" }
+        ],
+        sources: [
+          { id: "src-01", org: "ASPCApro", title: "Canine Body Language Tips", url: "https://www.aspcapro.org/resource/canine-body-language-tips" },
+          { id: "src-03", org: "PDSA (UK)", title: "Tips to Identify and Prevent Stress in Dogs", url: "https://www.pdsa.org.uk/what-we-do/blog/tips-to-identify-and-prevent-stress-in-dogs" }
+        ],
+        notes: "科學破除尾巴為快樂晴雨表之迷思，區分放鬆搖尾、高豎僵直抖動與夾尾。"
+      },
+      4: {
+        title: "P4 眼神、耳朵與嘴巴 出處追溯",
+        wiki: [
+          { name: "犬隻眼神與視線信號", path: "wiki/entities/eyes.md" },
+          { name: "犬隻耳朵姿勢與方向", path: "wiki/entities/ears.md" },
+          { name: "犬隻嘴部與臉部張力", path: "wiki/entities/mouth.md" }
+        ],
+        sources: [
+          { id: "src-01", org: "ASPCApro", title: "Canine Body Language Tips", url: "https://www.aspcapro.org/resource/canine-body-language-tips" },
+          { id: "src-02", org: "RSPCA (UK)", title: "Understanding Dog Behaviour", url: "https://www.rspca.org.uk/adviceandwelfare/pets/dogs/behaviour/understanding" },
+          { id: "src-05", org: "AAHA", title: "2015 Canine Behavior Guidelines (Table 1)", url: "https://www.aaha.org/resources/2015-aaha-canine-and-feline-behavior-management-guidelines/" }
+        ],
+        notes: "涵蓋鯨魚眼 (Whale Eye)、散瞳 (Mydriasis)、長唇 (Long Lip) 與緊繃後縮耳。"
+      },
+      5: {
+        title: "P5 打哈欠與舔唇 出處追溯",
+        wiki: [
+          { name: "犬類安定訊號與距離調節", path: "wiki/concepts/calming-signals.md" },
+          { name: "犬類轉移行為與自我調節", path: "wiki/concepts/displacement-behavior.md" },
+          { name: "全犬與情境評估法則", path: "wiki/context/context-matters.md" }
+        ],
+        sources: [
+          { id: "src-01", org: "ASPCApro", title: "Canine Body Language Tips", url: "https://www.aspcapro.org/resource/canine-body-language-tips" },
+          { id: "src-02", org: "RSPCA (UK)", title: "Understanding Dog Behaviour", url: "https://www.rspca.org.uk/adviceandwelfare/pets/dogs/behaviour/understanding" },
+          { id: "src-03", org: "PDSA (UK)", title: "Tips to Identify and Prevent Stress in Dogs", url: "https://www.pdsa.org.uk/what-we-do/blog/tips-to-identify-and-prevent-stress-in-dogs" }
+        ],
+        notes: "區分生理性哈欠與社交壓力哈欠，解析轉移嗅聞與甩毛 (Shake-Off)。"
+      },
+      6: {
+        title: "P6 溝通訊號升高模型 出處追溯",
+        wiki: [
+          { name: "犬類溝通訊號升高模型：耳語到吶喊", path: "wiki/concepts/communication-escalation.md" },
+          { name: "迷思四：處罰低吼等同拆除警報器", path: "wiki/context/myths-and-misconceptions.md" }
+        ],
+        sources: [
+          { id: "src-02", org: "RSPCA (UK)", title: "Understanding Dog Behaviour", url: "https://www.rspca.org.uk/adviceandwelfare/pets/dogs/behaviour/understanding" },
+          { id: "src-03", org: "PDSA (UK)", title: "Tips to Identify and Prevent Stress in Dogs", url: "https://www.pdsa.org.uk/what-we-do/blog/tips-to-identify-and-prevent-stress-in-dogs" },
+          { id: "src-04", org: "Dogs Trust (UK)", title: "Dog Body Language: Whispering to Shouting", url: "https://www.dogstrust.org.uk/dog-advice/understanding-your-dog/body-language" }
+        ],
+        notes: "論述咬傷非無預警發生、處罰低吼之嚴重危險性，以及與攻擊階梯之對齊。"
+      },
+      7: {
+        title: "P7 全身姿勢與情境判讀 出處追溯",
+        wiki: [
+          { name: "犬隻姿態與重心分佈", path: "wiki/entities/posture.md" },
+          { name: "全犬與情境評估法則", path: "wiki/context/context-matters.md" },
+          { name: "恐懼、焦慮與壓力光譜 (FAS)", path: "wiki/concepts/fas-spectrum.md" }
+        ],
+        sources: [
+          { id: "src-01", org: "ASPCApro", title: "Canine Body Language Tips", url: "https://www.aspcapro.org/resource/canine-body-language-tips" },
+          { id: "src-02", org: "RSPCA (UK)", title: "Understanding Dog Behaviour", url: "https://www.rspca.org.uk/adviceandwelfare/pets/dogs/behaviour/understanding" },
+          { id: "src-05", org: "AAHA", title: "2015 Canine Behavior Guidelines (Table 1)", url: "https://www.aaha.org/resources/2015-aaha-canine-and-feline-behavior-management-guidelines/" }
+        ],
+        notes: "特別強調身體定格凍結 (Freezing) 絕非溫馴乖巧，並註明突發行為轉變應先就醫排查病痛。"
+      },
+      8: {
+        title: "P8 互動情境測驗 出處追溯",
+        wiki: [
+          { name: "犬隻眼神與視線信號", path: "wiki/entities/eyes.md" },
+          { name: "犬隻姿態與重心分佈", path: "wiki/entities/posture.md" },
+          { name: "犬類溝通訊號升高模型", path: "wiki/concepts/communication-escalation.md" },
+          { name: "恐懼、焦慮與壓力光譜 (FAS)", path: "wiki/concepts/fas-spectrum.md" }
+        ],
+        sources: [
+          { id: "src-01", org: "ASPCApro", title: "Canine Body Language Tips", url: "https://www.aspcapro.org/resource/canine-body-language-tips" },
+          { id: "src-03", org: "PDSA (UK)", title: "Tips to Identify and Prevent Stress in Dogs", url: "https://www.pdsa.org.uk/what-we-do/blog/tips-to-identify-and-prevent-stress-in-dogs" },
+          { id: "src-04", org: "Dogs Trust (UK)", title: "Dog Body Language", url: "https://www.dogstrust.org.uk/dog-advice/understanding-your-dog/body-language" },
+          { id: "src-05", org: "AAHA", title: "2015 Canine Behavior Guidelines", url: "https://www.aaha.org/resources/2015-aaha-canine-and-feline-behavior-management-guidelines/" }
+        ],
+        notes: "測驗題緊密依據真實行為學臨床指標設計，兼具趣味與嚴謹性。"
+      },
+      9: {
+        title: "P9 主人安全回應守則 出處追溯",
+        wiki: [
+          { name: "壓力誘發物堆疊效應", path: "wiki/concepts/trigger-stacking.md" },
+          { name: "犬類轉移行為與自我調節", path: "wiki/concepts/displacement-behavior.md" },
+          { name: "常見犬類行為迷思與科學破解", path: "wiki/context/myths-and-misconceptions.md" }
+        ],
+        sources: [
+          { id: "src-03", org: "PDSA (UK)", title: "Tips to Identify and Prevent Stress in Dogs", url: "https://www.pdsa.org.uk/what-we-do/blog/tips-to-identify-and-prevent-stress-in-dogs" },
+          { id: "src-04", org: "Dogs Trust (UK)", title: "Dog Body Language", url: "https://www.dogstrust.org.uk/dog-advice/understanding-your-dog/body-language" }
+        ],
+        notes: "提出日常生活三大安全準則：看懂耳語、專屬避風港、嚴禁懲罰壓力。"
+      },
+      10: {
+        title: "P10 學習總結與知識庫總覽 出處追溯",
+        wiki: [
+          { name: "狗狗行為解密 LLM Wiki 總目錄", path: "wiki/index.md" }
+        ],
+        sources: [
+          { id: "src-01 ~ src-05", org: "五大權威獸醫與福利組織", title: "完整文獻中繼資料庫", url: "https://www.aspcapro.org" }
+        ],
+        notes: "全 Wiki 12 篇條目與 5 份獨立來源中繼資料庫之完整對齊。"
+      }
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function updateSlideUI() {
+      // Toggle active slide
+      document.querySelectorAll('.slide').forEach((s, idx) => {
+        s.classList.toggle('active', (idx + 1) === currentSlide);
+      });
+
+      // Update progress bar & counter
+      const progressPercent = (currentSlide / totalSlides) * 100;
+      document.getElementById('progressFill').style.width = `${progressPercent}%`;
+      document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+
+      // Update Nav buttons state
+      document.getElementById('btnPrev').disabled = (currentSlide === 1);
+      document.getElementById('btnNext').disabled = (currentSlide === totalSlides);
+      if (currentSlide === totalSlides) {
+        document.getElementById('btnNext').style.opacity = '0.5';
+      } else {
+        document.getElementById('btnNext').style.opacity = '1';
+      }
+    }
+
+    function navigateSlide(direction) {
+      const next = currentSlide + direction;
+      if (next >= 1 && next <= totalSlides) {
+        currentSlide = next;
+        updateSlideUI();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        navigateSlide(1);
+      } else if (e.key === 'ArrowLeft') {
+        navigateSlide(-1);
+      } else if (e.key === 'Escape') {
+        closeProvenanceDrawer();
+      }
+    });
+
+    // Interactive Quiz Logic
+    function checkQuiz(qNum, selected) {
+      const feedbackEl = document.getElementById(`feedback-${qNum}`);
+      const options = document.querySelectorAll(`#quiz-${qNum} .quiz-opt`);
+
+      options.forEach(opt => {
+        opt.classList.remove('correct', 'incorrect');
+      });
+
+      if (qNum === 1) {
+        if (selected === 'B') {
+          feedbackEl.className = 'quiz-feedback show-correct';
+          feedbackEl.innerHTML = '<strong>✅ 答對了！非常敏銳的觀察力！</strong><br>依據 ASPCApro 與 PDSA 指引，在戴飾品且被限制坐在蛋糕前的情境下，狗狗眼神微偏、嘴巴閉緊，雖然外表平靜配合，但實際上正在承受微小壓力與社交忍受。飼主此時應盡快拍完並獎勵牠，給予自由活動的空間。';
+          event.target.classList.add('correct');
+        } else {
+          feedbackEl.className = 'quiz-feedback show-incorrect';
+          feedbackEl.innerHTML = '<strong>❌ 不太正確喔！</strong><br>狗狗並非在「開心期待吹蠟燭」（擬人化誤解），也不是「馬上要咬人」。牠展現的是微小的忍受與緊繃信號（微偏頭、面部肌肉微緊），請回顧 P4 與 P5 的微表情解析！';
+          event.target.classList.add('incorrect');
+        }
+      } else if (qNum === 2) {
+        if (selected === 'B') {
+          feedbackEl.className = 'quiz-feedback show-correct';
+          feedbackEl.innerHTML = '<strong>✅ 完全正確！這是最關鍵的救命反應！</strong><br>依據 AAHA Table 1 與 Dogs Trust 溝通模型，定格凍結 (Freezing) 是戰鬥或逃跑受阻時的防禦臨界點。此時絕不能誤認為溫馴任人摸，立即停止撫摸並緩步後退，給予安全空間，能化解 99% 的潛在咬傷！';
+          event.target.classList.add('correct');
+        } else {
+          feedbackEl.className = 'quiz-feedback show-incorrect';
+          feedbackEl.innerHTML = '<strong>❌ 這是非常危險的做法！</strong><br>AAHA 與 Dogs Trust 特別示警：定格凍結（Freezing）絕對不是溫馴乖巧！若在此時強行撫摸或說教，極容易瞬間引發狗狗的防衛反擊咬傷。正確做法是「立即停手並後退」。';
+          event.target.classList.add('incorrect');
+        }
+      }
+    }
+
+    // Provenance Drawer Functions
+    function openProvenanceDrawer() {
+      showSlideSources(currentSlide);
+    }
+
+    function showSlideSources(slideNum) {
+      const data = provenanceData[slideNum] || provenanceData[1];
+      document.getElementById('drawerTitle').textContent = data.title;
+
+      let html = `<div style="margin-bottom: 16px; font-size: 0.9rem; color: #5C646A;">${data.notes}</div>`;
+
+      html += `<h4 style="color: var(--forest-green); margin: 16px 0 8px;">📚 對應 Wiki 知識庫條目</h4>`;
+      data.wiki.forEach(item => {
+        html += `
+          <div class="provenance-item">
+            <h5>Wiki 核心條目</h5>
+            <h4>${item.name}</h4>
+            <p>路徑：<code>${item.path}</code></p>
+          </div>
+        `;
+      });
+
+      html += `<h4 style="color: var(--forest-green); margin: 16px 0 8px;">🏛️ 原始文獻出處 (Raw Sources)</h4>`;
+      data.sources.forEach(src => {
+        html += `
+          <div class="provenance-item">
+            <h5>[${src.id}] ${src.org}</h5>
+            <h4>${src.title}</h4>
+            <a href="${src.url}" target="_blank" rel="noopener noreferrer" class="provenance-link">
+              <span>查看原始發布網址 ↗</span>
+            </a>
+          </div>
+        `;
+      });
+
+      document.getElementById('drawerContent').innerHTML = html;
+      document.getElementById('drawerOverlay').classList.add('open');
+    }
+
+    function closeProvenanceDrawer(e) {
+      if (!e || e.target === document.getElementById('drawerOverlay') || e.target.classList.contains('btn-close-drawer')) {
+        document.getElementById('drawerOverlay').classList.remove('open');
+      }
+    }
+
+    // Initialize UI on load
+    updateSlideUI();
+  </script>
+</body>
+</html>

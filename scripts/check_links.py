@@ -79,7 +79,14 @@ def main():
     for f in wiki_files:
         rel_path = f.relative_to(root)
         text = f.read_text(encoding="utf-8")
-        lines = text.splitlines()
+
+        # Skip link resolution on log.md (audit log contains diffs of deliberate broken link tests)
+        if f.name == "log.md":
+            continue
+
+        # Strip code blocks and inline code spans to avoid checking examples
+        sanitized_text = re.sub(r"```[\s\S]*?```", "", text)
+        sanitized_text = re.sub(r"`[^`]*?`", "", sanitized_text)
 
         # Check: Deprecated VCA citations in active wiki
         if f.name != "index.md" and f.name != "log.md":
